@@ -1,9 +1,5 @@
-#![allow(dead_code)]
-// cargo 1.45.1 / rustfmt 1.4.17-stable fails to process the relative path on Windows.
-#[rustfmt::skip]
 mod renderer;
 
-// #[cfg(all(not(target_os = "android"), feature = "gl"))]
 fn main() {
   use gl::types::*;
   use gl_rs as gl;
@@ -17,7 +13,6 @@ fn main() {
     gpu::{gl::FramebufferInfo, BackendRenderTarget, SurfaceOrigin},
     Color, ColorType, Surface,
   };
-  use std::convert::TryInto;
 
   type WindowedContext = glutin::ContextWrapper<glutin::PossiblyCurrent, glutin::window::Window>;
 
@@ -30,7 +25,6 @@ fn main() {
     .with_pixel_format(24, 8)
     .with_gl_profile(GlProfile::Core);
 
-  #[cfg(not(feature = "wayland"))]
   let cb = cb.with_double_buffer(Some(true));
 
   let windowed_context = cb.build_windowed(wb, &el).unwrap();
@@ -115,7 +109,6 @@ fn main() {
   el.run(move |event, _, control_flow| {
     *control_flow = ControlFlow::Wait;
 
-    #[allow(deprecated)]
     match event {
       Event::LoopDestroyed => {}
       Event::WindowEvent { event, .. } => match event {

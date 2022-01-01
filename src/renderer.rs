@@ -1,7 +1,7 @@
 // Author: Alberto González Palomo https://sentido-labs.com
 // ©2019 Alberto González Palomo https://sentido-labs.com
 // Released under the MIT license: https://opensource.org/licenses/MIT
-#![allow(clippy::unusual_byte_groupings)]
+
 use skia_safe::{
   gradient_shader, Color, Matrix, Paint, PaintJoin, PaintStyle, Path, Point, TileMode,
 };
@@ -101,7 +101,7 @@ pub fn render_frame(
     triangle_radius,
     triangle_rotation,
     None,
-    Color::from(0x77_222222),
+    Color::from(0x77_22_2222),
     true,
   );
   triangle(
@@ -110,7 +110,7 @@ pub fn render_frame(
     triangle_radius,
     triangle_rotation,
     None,
-    Color::from(0x77_222222),
+    Color::from(0x77_22_2222),
     false,
   );
 
@@ -224,7 +224,7 @@ fn chain_ring(
   paint.set_shader(gradient_shader::radial(
     (0.0, 0.04 * ridge_radius),
     ridge_radius,
-    [Color::from(0xff_555555), Color::from(0xff_7b492d)].as_ref(),
+    [Color::from(0xff_55_5555), Color::from(0xff_7b_492d)].as_ref(),
     [0.8, 1.0].as_ref(),
     TileMode::Clamp,
     None,
@@ -233,7 +233,7 @@ fn chain_ring(
   canvas.draw_path(&path, &paint);
   paint.set_shader(None); // Remove gradient.
   paint.set_style(PaintStyle::Stroke);
-  paint.set_color(0xff_592e1f);
+  paint.set_color(0xff_59_2e1f);
   canvas.draw_path(&path, &paint);
 
   canvas.restore();
@@ -243,14 +243,13 @@ fn chain_ring(
     &mut paint,
     (0.0, -ridge_radius),
     (2.0 * ridge_radius, 2.0 * ridge_radius),
-    (Color::from(0xff_592e1f), Color::from(0xff_885543)),
+    (Color::from(0xff_59_2e1f), Color::from(0xff_88_5543)),
   );
   canvas.draw_circle(center, ridge_radius, &paint);
 
   canvas.restore();
 }
 
-#[allow(clippy::many_single_char_names)]
 fn triangle(
   canvas: &mut skia_safe::canvas::Canvas,
   center: (i32, i32),
@@ -288,9 +287,14 @@ fn triangle(
             (0.420 * side, 0.50 * side)
           }
         }
-        i => panic!("Invalid vertex index {} for triangle.", i),
+        idx => panic!("Invalid vertex index {} for triangle.", idx),
       };
-      gradient(&mut paint, center, radii, (color, Color::from(0x00_0000ff)))
+      gradient(
+        &mut paint,
+        center,
+        radii,
+        (color, Color::from(0x00_00_00ff)),
+      )
     }
     None => {
       paint.set_anti_alias(true);
@@ -301,7 +305,7 @@ fn triangle(
       paint.set_shader(gradient_shader::radial(
         (c.0, c.1 - 0.5 * r),
         0.5 * r,
-        [Color::from(0xff_ffffff), color].as_ref(),
+        [Color::from(0xff_ff_ffff), color].as_ref(),
         None,
         TileMode::Clamp,
         None,
